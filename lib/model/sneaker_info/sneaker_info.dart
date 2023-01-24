@@ -3,7 +3,7 @@ import 'dart:ui';
 class SneakerInfo {
   String name;
   String brand;
-  double price;
+  String price;
   String image;
   Color color;
   SneakerInfo({

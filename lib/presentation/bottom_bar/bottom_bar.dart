@@ -5,7 +5,6 @@ import 'package:sneakers_shop/shared/resources/export.dart';
 import 'package:sneakers_shop/shared/styles/export.dart';
 
 class BottomBar extends StatefulWidget {
-  static const String routeName = '/bottom_bar';
   final int initialIndex;
   const BottomBar({
     required this.initialIndex,

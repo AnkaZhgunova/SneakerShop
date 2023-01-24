@@ -10,7 +10,7 @@ class SneakerSlider extends StatefulWidget {
 }
 
 class _SneakerSliderState extends State<SneakerSlider>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   MockData mockData = MockData();
   late AnimationController animatedController;
   late Animation<double> sneakerRotation;
@@ -29,20 +29,27 @@ class _SneakerSliderState extends State<SneakerSlider>
     animatedController = AnimationController(
       vsync: this,
       duration: Duration(
-        milliseconds: 1000,
+        milliseconds: 700,
       ),
     );
-    sneakerRotation = Tween(begin: -0.6, end: 0.0).animate(animatedController);
-    startPaperAnimation();
+    sneakerRotation = Tween(begin: -0.8, end: 0.0).animate(animatedController);
+    startRotateSneaker();
     super.initState();
   }
 
-  Future<void> startPaperAnimation() async {
+  Future<void> startRotateSneaker() async {
     try {
-      await animatedController.forward(from: 0.4).orCancel;
+      await animatedController.forward(from: 0.2).orCancel;
     } on TickerCanceled {
       animatedController.stop();
     }
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    animatedController.dispose();
+    super.dispose();
   }
 
   @override
@@ -60,26 +67,24 @@ class _SneakerSliderState extends State<SneakerSlider>
               selectedIndex = index;
             });
           });
-          startPaperAnimation();
+          startRotateSneaker();
         },
         itemBuilder: (BuildContext context, int index) {
           final diff = index.toDouble() - pageOffset;
 
-          return GestureDetector(
-            onTap: () {},
-            child: Transform(
-              transform: Matrix4.identity()
-                ..setEntry(3, 3, 1 / 0.90)
-                ..setEntry(3, 0, 0.002 * -diff),
-              alignment: Alignment.center,
-              child: Visibility(
-                visible: selectedIndex <= index,
-                child: SneakerCard(
-                  sneakerInfo: mockData.sneakerData[index],
-                  offset: pageOffset - 1,
-                  controller: animatedController,
-                  rotation: sneakerRotation,
-                ),
+          return Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 3, 1 / 0.90)
+              ..setEntry(3, 0, 0.002 * -diff),
+            alignment: Alignment.center,
+            child: AnimatedOpacity(
+              opacity: selectedIndex > index ? 0 : 1,
+              curve: Curves.decelerate,
+              duration: Duration(milliseconds: 50),
+              child: SneakerCard(
+                sneakerInfo: mockData.sneakerData[index],
+                controller: animatedController,
+                rotation: sneakerRotation,
               ),
             ),
           );

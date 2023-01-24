@@ -15,6 +15,11 @@ class AppTextStyle {
     fontWeight: FontWeight.w700,
     color: AppColors.black,
   );
+  static final darkGrey20Bold500 = GoogleFonts.josefinSans(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkGrey,
+  );
   static final white20Bold500 = GoogleFonts.josefinSans(
     fontSize: 20,
     fontWeight: FontWeight.w700,

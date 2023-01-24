@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sneakers_shop/model/export.dart';
 import 'package:sneakers_shop/shared/styles/export.dart';
-import 'package:sneakers_shop/shared/ui_kit/buttons/icon_button.dart';
+import 'package:sneakers_shop/shared/ui_kit/export.dart';
 
 class NewModelCard extends StatelessWidget {
   final SneakerInfo sneakerInfo;
@@ -63,7 +63,7 @@ class NewModelCard extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      '\$${sneakerInfo.price.toString()}',
+                      '\$${sneakerInfo.price}',
                       style: AppTextStyle.black14SemiBold600,
                     ),
                   ],

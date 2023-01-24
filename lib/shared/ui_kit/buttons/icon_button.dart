@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sneakers_shop/shared/resources/export.dart';
-import 'package:sneakers_shop/shared/styles/colors.dart';
+import 'package:sneakers_shop/shared/styles/export.dart';
 
 class AppIconButton extends StatelessWidget {
   final VoidCallback onTap;
