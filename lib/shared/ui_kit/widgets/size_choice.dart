@@ -4,7 +4,11 @@ import 'package:sneakers_shop/shared/resources/export.dart';
 import 'package:sneakers_shop/shared/styles/export.dart';
 
 class SizeChoice extends StatefulWidget {
-  const SizeChoice({Key? key}) : super(key: key);
+  final VoidCallback? tryIt;
+  const SizeChoice({
+    this.tryIt,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<SizeChoice> createState() => _SizeChoiceState();
@@ -13,58 +17,17 @@ class SizeChoice extends StatefulWidget {
 class _SizeChoiceState extends State<SizeChoice> {
   int? _selected;
 
-  TextStyle textStyle = AppTextStyle.black14SemiBold600;
-  Color iconColor = AppColors.black;
-  List<Widget> options = [];
-  @override
-  void initState() {
-    options = [
-      Row(
-        children: [
-          Text(
-            'Try it',
-            style: textStyle,
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          SvgPicture.asset(
-            AppIcons.footPrintIcon,
-            fit: BoxFit.scaleDown,
-            height: 30,
-            width: 30,
-            color: iconColor,
-          ),
-        ],
-      ),
-      Center(
-        child: Text(
-          '7.5',
-          style: textStyle,
-        ),
-      ),
-      Center(
-        child: Text(
-          '8',
-          style: textStyle,
-        ),
-      ),
-      Center(
-        child: Text(
-          '9.5',
-          style: textStyle,
-        ),
-      ),
-    ];
-
-    super.initState();
-  }
+  List<String> options = ['7.5', '8', '9.5'];
 
   Widget _optionButton(int index) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selected = index;
+          if (_selected == index) {
+            _selected = null;
+          } else {
+            _selected = index;
+          }
         });
       },
       child: Container(
@@ -78,18 +41,16 @@ class _SizeChoiceState extends State<SizeChoice> {
             color: AppColors.grey,
           ),
         ),
-        child: options[index],
+        child: Center(
+          child: Text(
+            options[index],
+            style: _selected == index
+                ? AppTextStyle.white14Medium500
+                : AppTextStyle.black14SemiBold600,
+          ),
+        ),
       ),
     );
-  }
-
-  List<Widget> _buildOptions() {
-    final List<Widget> widgets = [];
-    for (int index = 0; index < options.length; index++) {
-      widgets.add(_optionButton(index));
-    }
-
-    return widgets;
   }
 
   @override
@@ -97,7 +58,49 @@ class _SizeChoiceState extends State<SizeChoice> {
     return ListView(
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
-      children: _buildOptions(),
+      children: [
+        GestureDetector(
+          onTap: widget.tryIt,
+          child: Container(
+            width: 90,
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: AppColors.grey,
+              ),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'Try it',
+                  style: AppTextStyle.black14SemiBold600,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                SvgPicture.asset(
+                  AppIcons.footPrintIcon,
+                  fit: BoxFit.scaleDown,
+                  height: 30,
+                  width: 30,
+                ),
+              ],
+            ),
+          ),
+        ),
+        ListView.builder(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: options.length,
+          itemBuilder: (context, index) {
+            return _optionButton(index);
+          },
+        ),
+      ],
     );
   }
 }
