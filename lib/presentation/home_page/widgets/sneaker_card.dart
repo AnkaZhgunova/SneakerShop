@@ -45,7 +45,7 @@ class _SneakerCardState extends State<SneakerCard> {
                   AppIconButton(
                     onTap: () {},
                     buttonType: ButtonIcon.favorite,
-                    color: AppColors.white,
+                    iconColor: AppColors.white,
                   ),
                 ],
               ),
@@ -69,7 +69,7 @@ class _SneakerCardState extends State<SneakerCard> {
                 child: AppIconButton(
                   onTap: () {},
                   buttonType: ButtonIcon.arrow,
-                  color: AppColors.white,
+                  iconColor: AppColors.white,
                 ),
               ),
             ],

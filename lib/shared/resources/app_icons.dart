@@ -8,4 +8,6 @@ class AppIcons {
   static const String searchIcon = 'assets/icons/search_icon.svg';
   static const String shoppingCartIcon = 'assets/icons/shopping_cart_icon.svg';
   static const String footPrintIcon = 'assets/icons/foot_print_icon.svg';
+  static const String plusIcon = 'assets/icons/plus_icon.svg';
+  static const String minusIcon = 'assets/icons/minus_icon.svg';
 }

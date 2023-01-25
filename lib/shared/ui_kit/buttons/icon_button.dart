@@ -6,11 +6,13 @@ import 'package:sneakers_shop/shared/styles/export.dart';
 class AppIconButton extends StatelessWidget {
   final VoidCallback onTap;
   final ButtonIcon buttonType;
-  final Color color;
+  final Color iconColor;
+  final Color containerColor;
   const AppIconButton({
     required this.onTap,
     required this.buttonType,
-    this.color = AppColors.black,
+    this.iconColor = AppColors.black,
+    this.containerColor = Colors.transparent,
     Key? key,
   }) : super(key: key);
 
@@ -20,11 +22,11 @@ class AppIconButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 25,
-        width: 25,
-        color: Colors.transparent,
+        width: 30,
+        color: containerColor,
         child: SvgPicture.asset(
           buttonType.getIconButton,
-          color: color,
+          color: iconColor,
         ),
       ),
     );
@@ -34,6 +36,8 @@ class AppIconButton extends StatelessWidget {
 enum ButtonIcon {
   arrow,
   favorite,
+  plus,
+  minus,
 }
 
 extension GetIconButton on ButtonIcon {
@@ -46,6 +50,14 @@ extension GetIconButton on ButtonIcon {
       case ButtonIcon.favorite:
         {
           return AppIcons.favoriteIcon;
+        }
+      case ButtonIcon.plus:
+        {
+          return AppIcons.plusIcon;
+        }
+      case ButtonIcon.minus:
+        {
+          return AppIcons.minusIcon;
         }
       default:
         {
