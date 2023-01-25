@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sneakers_shop/domain/bloc/export.dart';
-import 'package:sneakers_shop/shared/resources/app_images.dart';
+import 'package:sneakers_shop/model/export.dart';
 import 'package:sneakers_shop/shared/styles/export.dart';
 import 'package:sneakers_shop/shared/ui_kit/export.dart';
 
@@ -14,6 +14,8 @@ class BagPage extends StatefulWidget {
 }
 
 class _BagPageState extends State<BagPage> {
+  MockData mockData = MockData();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<BuySneakerBloc>.value(
@@ -21,6 +23,7 @@ class _BagPageState extends State<BagPage> {
       child: BlocBuilder<BuySneakerBloc, BuySneakerState>(
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: AppColors.white,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +73,7 @@ class _BagPageState extends State<BagPage> {
                   child: ListView.builder(
                     //shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    itemCount: 3,
+                    itemCount: 4,
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     itemBuilder: (context, index) {
                       return Stack(
@@ -88,7 +91,7 @@ class _BagPageState extends State<BagPage> {
                             left: 13,
                             top: -10,
                             child: Image.asset(
-                              AppImages.fourthSneaker,
+                              mockData.sneakerData[index].image,
                               scale: 5,
                             ),
                           ),
@@ -96,7 +99,7 @@ class _BagPageState extends State<BagPage> {
                             left: 150,
                             top: 20,
                             child: Text(
-                              'NIKE AIR MAX',
+                              '${mockData.sneakerData[index].brand} ${mockData.sneakerData[index].name}',
                               style: AppTextStyle.black14SemiBold600,
                             ),
                           ),
@@ -104,7 +107,7 @@ class _BagPageState extends State<BagPage> {
                             left: 150,
                             top: 50,
                             child: Text(
-                              r'$ 130.00',
+                              mockData.sneakerData[index].price,
                               style: AppTextStyle.black20Bold500,
                             ),
                           ),
@@ -125,15 +128,31 @@ class _BagPageState extends State<BagPage> {
               ],
             ),
             bottomSheet: Padding(
-              padding: const EdgeInsets.only(
-                right: 20,
-                left: 20,
-                top: 10,
-                bottom: 20,
-              ),
-              child: AppButton(
-                buttonText: 'NEXT',
-                onPressed: () {},
+              padding: const EdgeInsets.all(20),
+              child: Wrap(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'TOTAL',
+                        style: AppTextStyle.black14SemiBold600,
+                      ),
+                      Text(
+                        r'$ 540.00',
+                        style: AppTextStyle.black20Bold500,
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: AppButton(
+                      buttonText: 'NEXT',
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
               ),
             ),
           );

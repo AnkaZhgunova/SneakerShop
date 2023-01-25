@@ -234,7 +234,7 @@ class _DetailPageState extends State<DetailPage> {
                     child: SizeChoice(),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
                   BlocProvider<BuySneakerBloc>(
                     create: (_) => GetIt.I.get(),

@@ -10,7 +10,8 @@ class IncrementCounter extends StatelessWidget {
     required this.plusTap,
     required this.minusTap,
     required this.number,
-    Key? key,}) : super(key: key);
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
