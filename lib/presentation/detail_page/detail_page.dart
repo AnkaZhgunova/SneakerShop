@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:sneakers_shop/domain/bloc/export.dart';
 import 'package:sneakers_shop/model/export.dart';
 import 'package:sneakers_shop/presentation/export.dart';
@@ -236,27 +235,24 @@ class _DetailPageState extends State<DetailPage> {
                   SizedBox(
                     height: 40,
                   ),
-                  BlocProvider<BuySneakerBloc>(
-                    create: (_) => GetIt.I.get(),
-                    child: BlocBuilder<BuySneakerBloc, BuySneakerState>(
-                      builder: (context, state) {
-                        return AppButton(
-                          buttonText: 'ADD TO BAG',
-                          onPressed: () {
-                            BlocProvider.of<BuySneakerBloc>(context)
-                                .addSneakerToBag(widget.sneakerInfo)
-                                .whenComplete(
-                                  () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute<dynamic>(
-                                      builder: (context) => BagPage(),
-                                    ),
+                  BlocBuilder<BagBloc, BagState>(
+                    builder: (context, state) {
+                      return AppButton(
+                        buttonText: 'ADD TO BAG',
+                        onPressed: () {
+                          BlocProvider.of<BagBloc>(context)
+                              .addSneakerToBag(widget.sneakerInfo)
+                              .whenComplete(
+                                () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute<dynamic>(
+                                    builder: (context) => BagPage(),
                                   ),
-                                );
-                          },
-                        );
-                      },
-                    ),
+                                ),
+                              );
+                        },
+                      );
+                    },
                   ),
                 ],
               ),

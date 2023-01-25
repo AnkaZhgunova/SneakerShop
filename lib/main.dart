@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:sneakers_shop/domain/bloc/export.dart';
 import 'package:sneakers_shop/presentation/export.dart';
 
 import 'core/injector.dart';
@@ -26,10 +29,13 @@ class Application extends StatefulWidget {
 class _ApplicationState extends State<Application> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: BottomBar(
-        initialIndex: 0,
+    return BlocProvider<BagBloc>(
+      create: (context) => GetIt.I.get(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: BottomBar(
+          initialIndex: 0,
+        ),
       ),
     );
   }
