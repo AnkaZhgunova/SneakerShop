@@ -1,7 +1,7 @@
 # Sneaker Shop
 - Page View with 3D Perspective Transform
 - Rotate Animation
-- Fade Animation
+- Opacity Animation
 - Translate Animation
 
 ## Preview
