@@ -5,12 +5,14 @@ class SneakerInfo {
   String brand;
   String price;
   String image;
-  Color color;
+  Color? color;
+  int sneakerNumber;
   SneakerInfo({
     required this.name,
     required this.brand,
     required this.price,
     required this.image,
-    required this.color,
+    this.color,
+    this.sneakerNumber = 0,
   });
 }

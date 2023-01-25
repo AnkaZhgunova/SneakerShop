@@ -1,11 +1,16 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:sneakers_shop/domain/bloc/export.dart';
 import 'package:sneakers_shop/model/export.dart';
+import 'package:sneakers_shop/presentation/export.dart';
 import 'package:sneakers_shop/shared/styles/export.dart';
 import 'package:sneakers_shop/shared/ui_kit/export.dart';
 
 class DetailPage extends StatefulWidget {
   final SneakerInfo sneakerInfo;
+
   const DetailPage({
     required this.sneakerInfo,
     Key? key,
@@ -20,6 +25,7 @@ class _DetailPageState extends State<DetailPage> {
   BoxShape newShape = BoxShape.circle;
   double oldSize = 200;
   double newSize = 600;
+
   @override
   void initState() {
     Future.delayed(Duration(microseconds: 500), () {
@@ -78,7 +84,7 @@ class _DetailPageState extends State<DetailPage> {
                   padding: EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: widget.sneakerInfo.color.withOpacity(0.7),
+                    color: widget.sneakerInfo.color?.withOpacity(0.7),
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.black.withOpacity(0.2),
@@ -150,14 +156,13 @@ class _DetailPageState extends State<DetailPage> {
                     ],
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
-                  Container(
-                    height: 1,
-                    color: AppColors.pinkButtons.withOpacity(0.5),
+                  Divider(
+                    color: AppColors.pinkButtons,
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -231,9 +236,27 @@ class _DetailPageState extends State<DetailPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  AppButton(
-                    buttonText: 'ADD TO BAG',
-                    onPressed: () {},
+                  BlocProvider<BuySneakerBloc>(
+                    create: (_) => GetIt.I.get(),
+                    child: BlocBuilder<BuySneakerBloc, BuySneakerState>(
+                      builder: (context, state) {
+                        return AppButton(
+                          buttonText: 'ADD TO BAG',
+                          onPressed: () {
+                            BlocProvider.of<BuySneakerBloc>(context)
+                                .addSneakerToBag(widget.sneakerInfo)
+                                .whenComplete(
+                                  () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute<dynamic>(
+                                      builder: (context) => BagPage(),
+                                    ),
+                                  ),
+                                );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

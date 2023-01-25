@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sneakers_shop/presentation/export.dart';
 
+import 'core/injector.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
   ]);
+  Injector().init();
   runApp(
     Application(),
   );
