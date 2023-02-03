@@ -25,22 +25,37 @@ class BagBloc extends Bloc<BagEvent, BagState> {
       },
     );
   }
-  Future<void> addSneakerToBag(SneakerInfo sneakerInfo) async {
+  Future<void> addSneakerToBag({
+    required SneakerInfo sneakerInfo,
+  }) async {
     add(BagEvent.loading());
-    sneakerInfo.sneakerNumber++;
-    if (sneakerInfo.sneakerNumber == 1) {
+    if (!sneakersList.contains(sneakerInfo)) {
       sneakersList.add(sneakerInfo);
+      sneakerInfo.sneakerNumber = 1;
+    } else {
+      sneakerInfo.sneakerNumber++;
     }
     add(
       BagEvent.loaded(sneakersList: sneakersList),
     );
   }
 
-  void removeSneakerNumber(SneakerInfo sneakerInfo) {
+  void increaseNumber(SneakerInfo sneakerInfo) {
+    add(BagEvent.loading());
+    sneakerInfo.sneakerNumber++;
+    add(
+      BagEvent.loaded(sneakersList: sneakersList),
+    );
+  }
+
+  void removeSneakerNumber({
+    required SneakerInfo sneakerInfo,
+  }) {
     add(BagEvent.loading());
     sneakerInfo.sneakerNumber--;
     if (sneakerInfo.sneakerNumber == 0) {
       sneakersList.remove(sneakerInfo);
+
     }
     add(
       BagEvent.loaded(sneakersList: sneakersList),

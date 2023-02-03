@@ -241,7 +241,9 @@ class _DetailPageState extends State<DetailPage> {
                         buttonText: 'ADD TO BAG',
                         onPressed: () {
                           BlocProvider.of<BagBloc>(context)
-                              .addSneakerToBag(widget.sneakerInfo)
+                              .addSneakerToBag(
+                                sneakerInfo: widget.sneakerInfo,
+                              )
                               .whenComplete(
                                 () => Navigator.push(
                                   context,

@@ -14,6 +14,8 @@ class BagPage extends StatefulWidget {
 }
 
 class _BagPageState extends State<BagPage> {
+  GlobalKey<AnimatedListState> animatedKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<BagBloc>.value(
@@ -75,62 +77,85 @@ class _BagPageState extends State<BagPage> {
                 else
                   SizedBox(
                     height: MediaQuery.of(context).size.height - 220,
-                    child: ListView.builder(
+                    child: AnimatedList(
+                      key: animatedKey,
                       scrollDirection: Axis.vertical,
-                      itemCount: state.sneakersList!.length,
+                      initialItemCount: state.sneakersList!.length,
                       padding: EdgeInsets.symmetric(horizontal: 20),
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, index, animation) {
+                        // Future.delayed(Duration.zero,(){
+                        //   animatedKey.currentState?.insertItem(0);
+                        // });
+
+
                         return Stack(
                           children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 20),
-                              height: 100,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                color: AppColors.grey,
-                                borderRadius: BorderRadius.circular(25),
+                            ScaleTransition(
+                              scale: animation,
+                              child: Container(
+                                margin: EdgeInsets.symmetric(vertical: 20),
+                                height: 100,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                  color: AppColors.grey,
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
                               ),
                             ),
                             Positioned(
                               left: 13,
                               top: -10,
-                              child: Image.asset(
-                                state.sneakersList![index].image,
-                                scale: 5,
+                              child: ScaleTransition(
+                                scale: animation,
+                                child: Image.asset(
+                                  state.sneakersList![index].image,
+                                  scale: 5,
+                                ),
                               ),
                             ),
                             Positioned(
                               left: 150,
                               top: 20,
-                              child: Text(
-                                '${state.sneakersList![index].brand} ${state.sneakersList![index].name}',
-                                style: AppTextStyle.black14SemiBold600,
+                              child: AnimatedTransition(
+                                axis: Axis.horizontal,
+                                offset: animation.value,
+                                child: Text(
+                                  '${state.sneakersList![index].brand} ${state.sneakersList![index].name}',
+                                  style: AppTextStyle.black14SemiBold600,
+                                ),
                               ),
                             ),
                             Positioned(
                               left: 150,
                               top: 50,
-                              child: Text(
-                                '\$ ${state.sneakersList![index].price.toString()}',
-                                style: AppTextStyle.black20Bold500,
+                              child: AnimatedTransition(
+                                axis: Axis.horizontal,
+                                offset: animation.value,
+                                child: Text(
+                                  '\$ ${state.sneakersList![index].price.toString()}',
+                                  style: AppTextStyle.black20Bold500,
+                                ),
                               ),
                             ),
                             Positioned(
                               left: 150,
                               top: 80,
-                              child: IncrementCounter(
-                                plusTap: () {
-                                  bloc.addSneakerToBag(
-                                    state.sneakersList![index],
-                                  );
-                                },
-                                minusTap: () {
-                                  bloc.removeSneakerNumber(
-                                    state.sneakersList![index],
-                                  );
-                                },
-                                number:
-                                    state.sneakersList![index].sneakerNumber,
+                              child: AnimatedTransition(
+                                axis: Axis.horizontal,
+                                offset: animation.value,
+                                child: IncrementCounter(
+                                  plusTap: () {
+                                    bloc.increaseNumber(
+                                      state.sneakersList![index],
+                                    );
+                                  },
+                                  minusTap: () {
+                                    bloc.removeSneakerNumber(
+                                      sneakerInfo: state.sneakersList![index],);
+                                  },
+                                  number:
+                                      state.sneakersList![index].sneakerNumber,
+                                ),
                               ),
                             ),
                           ],

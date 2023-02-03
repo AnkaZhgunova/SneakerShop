@@ -15,4 +15,12 @@ class SneakerInfo {
     this.color,
     this.sneakerNumber = 0,
   });
+
+  @override
+  int get hashCode => image.hashCode;
+
+  @override
+  bool operator ==(dynamic other) {
+    return image == other.image;
+  }
 }
